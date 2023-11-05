@@ -60,7 +60,11 @@ class MesaController extends Controller
 
     Mesa::insert($datosMesas);
 
+    dd($request);
+
     return redirect('/mesas')->with('success', 'La mesa se ha guardado con éxito.');
+
+   
 }
 
     /**
