@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RegistrarVotante</title>
+    <title>RegistrarVottantesporcsv</title>
     <style>
         * {
             margin: 0;
@@ -315,110 +315,34 @@
            
             </div>
     <div class="votante-form-container">
-    <form action="{{ url('/votante') }}" method="post" enctype="multipart/form-data">
-        @csrf
-        @if (isset($votante))
-                {{ method_field('PATCH') }}
-            @endif
-
-        <h2 class="form-title">Registrar Votante</h2>
-        <div class="column">
-
+    <form action="{{ route('votantes.importCsv') }}" method="post" enctype="multipart/form-data">
+    @csrf
+    <div class="csv-upload-section">
+        <h2>Cargar Votantes Masivamente desde CSV</h2>
+        <br><br>
         <label for="ideleccion">Elegir Elección:</label>
-<select name="ideleccion" id="ideleccion" required>
-    <option value="">Selecciona una elección</option>
-    @if (isset($elecciones))
-        @foreach ($elecciones as $eleccion)
-            <option value="{{ $eleccion->id }}" @if(isset($votante) && $votante->ideleccion == $eleccion->id) selected @endif>{{ $eleccion->nombre }}</option>
-        @endforeach
-    @endif
-</select>
-@error('ideleccion')
-<span class="error-message">{{ $message }}</span>
-@enderror
+        <select name="ideleccion" id="ideleccion" required>
+            <option value="">Selecciona una elección</option>
+            @if (isset($elecciones))
+                @foreach ($elecciones as $eleccion)
+                    <option value="{{ $eleccion->id }}">{{ $eleccion->nombre }}</option>
+                @endforeach
+            @endif
+        </select>
 
-                <label for="nombres">Nombre:</label>
-                <input type="text" placeholder="Escribe el nombre aqui..." maxlength="40" oninput="this.value = this.value.replace(/[^A-Za-z,. ]+/g, '')"
-                name="nombres" value="{{ isset($votante) ? $votante->nombres : '' }}" required><br><br>
-
-                <label for="apellidoPaterno">Apellido Paterno:</label>
-                <input type="text" placeholder="Escribe el Apellido Paterno aquí..." maxlength="40"
-                oninput="this.value = this.value.replace(/[^A-Za-z,.]+/g, '')"
-                 name="apellidoPaterno" value="{{ isset($votante) ? $votante->apellidoPaterno : '' }}" id="apellidoPaterno" required><br><br>
-
-                <label for="apellidoMaterno">Apellido Materno:</label>
-                <input type="text" placeholder="Escribe el Apellido Materno aquí..." maxlength="40"
-                oninput="this.value = this.value.replace(/[^A-Za-z,.]+/g, '')"
-                name="apellidoMaterno" value="{{ isset($votante) ? $votante->apellidoMaterno : '' }}" id="apellidoMaterno" required><br><br>
-
-                <label for="codSis">Codigo Sis:</label>
-                <input type="text" placeholder="Escribe el Codigo Sis aquí..." maxlength="9"
-                oninput="this.value = this.value.replace(/[^0-9]+/g, '')"
-                name="codSis" value="{{ isset($votante) ? $votante->codSis : old('codSis') }}" id="codSis" required>
-                @error('codSis')
-                <span class="error-message">{{ $message }}</span>
-                @enderror<br><br>
-
-                <label for="CI">CI:</label>
-                <input type="text" placeholder="Escribe el Carnet de Identidad aquí..." maxlength="10" 
-                oninput="this.value = this.value.replace(/[^A-Za-z,.0-9]+/g, '')"
-                name="CI" value="{{ isset($votante) ? $votante->CI : old('CI') }}" required>
-                @error('CI')
-                <span class="error-message">{{ $message }}</span>
-                @enderror<br><br>
-            
-                <label for="tipoVotante">Tipo de Votante:</label>
-                <select name="tipoVotante" value="{{ isset($votante) ? $votante->tipoVotante : '' }}" id="tipoVotante" required>
-                    <option value="Estudiante">Estudiante</option>
-                    <option value="Docente">Docente</option>
-                    <option value="Administrativo">Administrativo</option>
-                </select>
-
-                <div class="campo-adicional" id="campoCarrera">
-                <label for="carrera">Carrera:</label>
-                <input type="text" placeholder="Escribe la Carrera aquí..." maxlength="40" 
-                oninput="this.value = this.value.replace(/[^A-Za-z,. ]+/g, '')"
-                name="carrera" value="{{ isset($votante) ? $votante->carrera : '' }}" id="carrera" ><br><br>
-                </div>
-
-                <div class="campo-adicional" id="campoProfesion">
-                <label for="profesion">Profesión:</label>
-                <input type="text" placeholder="Escribe la Profesión aquí..." maxlength="40" 
-                oninput="this.value = this.value.replace(/[^A-Za-z,. ]+/g, '')"
-                name="profesion" value="{{ isset($votante) ? $votante->profesion : '' }}" id="profesion" ><br><br>
-                </div>
-
-                <div class="campo-adicional" id="campoFacultad">
-                <label for="facultad">Facultad:</label>
-                <input type="text" placeholder="Escribe la Facultad aquí..." maxlength="40" 
-                oninput="this.value = this.value.replace(/[^A-Za-z,. ]+/g, '')"
-                name="facultad" value="{{ isset($votante) ? $votante->facultad : '' }}" id="facultad" ><br><br>
-                </div>
-
-                <div class="campo-adicional" id="campoCargo">
-                <label for="cargoAdministrativo">Cargo Administrativo:</label>
-                <input type="text" placeholder="Escribe el Cargo Administrativo aquí..." maxlength="40"
-                oninput="this.value = this.value.replace(/[^A-Za-z,. ]+/g, '')"
-                name="cargoAdministrativo" value="{{ isset($votante) ? $votante->cargoAdministrativo : '' }}" id="cargoAdministrativo" ><br><br>
-                </div>
-                
-                <label for="celular">Celular:</label>
-                <input type="number" placeholder="Escribe el Número de Celular aquí..." min="60000000" max=""79999999 
-                name="celular" value="{{ isset($votante) ? $votante->celular : '' }}" id="celular" required><br><br>
-
-                <label for="email">e-mail:</label>
-                <input type="email" placeholder="Escribe el e-Mail aquí..." maxlength="40" 
-                name="email" value="{{ isset($votante) ? $votante->email : '' }}" id="email" required><br><br>
-
+       
+        <label for="cargarListaCSV">Archivo CSV:</label> <p>Selecciona un archivo CSV para cargar múltiples votantes a la vez.</p>
+        <input type="file" name="cargarListaCSV" id="cargarListaCSV" accept=".csv">
+        
+        <input type="submit" value="Cargar Votantes CSV" onclick="confirmarCargaCSV()">
+    </div>
+        
 
                 
         </div>
-        <input type="submit" value="Registrar"
-                onclick="confirmacion()">
-          
-        <input type="reset" value="Cancelar" onclick="cancelacion()">
-        <label for=""></label><br><br>
-        <label for=""></label><br><br>
+        
+       <br><br>
+        <br><br>
         
     </form>
 
@@ -474,32 +398,6 @@
 
 
 </div>
-    <script>
-        function mostrarCampoAdicional() {
-            var tipoVotante = document.getElementById("tipoVotante").value;
-            var campoFacultad = document.getElementById("campoFacultad");
-            var campoProfesion = document.getElementById("campoProfesion");
-            var campoCargo = document.getElementById("campoCargo");
-            var campoCarrera = document.getElementById("campoCarrera")
-            
-            campoFacultad.style.display = "none";
-            campoProfesion.style.display = "none";
-            campoCargo.style.display = "none";
-            campoCarrera.style.display = "none";
-            
-            if (tipoVotante === "Estudiante") {
-                campoFacultad.style.display = "block";
-                campoCarrera.style.display = "block";
-            } else if (tipoVotante === "Docente") {
-                campoProfesion.style.display = "block";
-            } else if (tipoVotante === "Administrativo") {
-                campoCargo.style.display = "block";
-            }
-        }
-
-        document.getElementById("tipoVotante").addEventListener("change", mostrarCampoAdicional);
-
-        mostrarCampoAdicional();
-    </script>
+    
 </body>
 </html> 

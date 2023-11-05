@@ -11,7 +11,7 @@
     <br>
     <br>
     <title>Comunicados</title>
-    <link rel="stylesheet" href="{{ asset('css/Elecciones_Creadas.css') }}">
+    
 
     </head>
 
@@ -35,6 +35,7 @@
             <li><a href="{{ url('/comunicados') }}">Comunicados</a></li>
             <li><a href="#">Documentación</a></li>
             <li><a href="#">Ingreso</a></li>
+            <img src="/images/img.png"  class="company-logo">
         </ul>
         <div class="menu-icon"></div>
     </nav>
@@ -64,7 +65,7 @@
                         <thead>
                             <tr>
                                 <th>Nro</th>
-                                <th>Titulo</th>
+                                <th>Título</th>
                                 <th>Añadido el:</th>
                                 <th>Finaliza el:</th>
                                 <th>Acciones</th>

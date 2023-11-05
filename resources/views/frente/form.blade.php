@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RegistrarFrente</title>
+    <script src="{{ asset('js/Elecciones_Creadas.js') }}"></script>
+
     <style>
         * {
             margin: 0;
@@ -306,6 +308,7 @@
             {{-- <li><a href="#">Acerca de</a></li>
             <li><a href="#">Contactos</a></li> --}}
             <li><a href="#">Ingreso</a></li>
+            <img src="/images/img.png"  class="company-logo">
         </ul>
         <div class="menu-icon"></div>
     </nav>
@@ -343,8 +346,8 @@
 <span class="error-message">{{ $message }}</span>
 @enderror<br><br>
 
-                <label for="cargopostulacion">Cargo de postulacion:</label>
-                <input type="text" placeholder="Escribe el cargo de postulacion aqui..." maxlength="40"
+                <label for="cargopostulacion">Cargo de postulación:</label>
+                <input type="text" placeholder="Escribe el cargo de postulación aqui..." maxlength="40"
                 oninput="this.value = this.value.replace(/[^A-Za-z,. ]+/g, '')"
                  name="cargopostulacion" value="{{ isset($frente) ? $frente->cargopostulacion : '' }}" id="cargopostulacion" required><br><br>
         
@@ -368,25 +371,25 @@
                 </select>    
                 <div class="campo-adicional" id="candidato1">
                 <label for="profesion">Nombre Candidato de Frente 1:</label>
-                <input type="text" placeholder="Escribe el Cnombre aquí..." maxlength="30"
+                <input type="text" placeholder="Escribe el Nombre aquí..." maxlength="30"
                 oninput="this.value = this.value.replace(/[^A-Za-z,. ]+/g, '')"
                 name="nombrecandidato1" value="{{ isset($frente) ? $frente->nombrecandidato1 : old('nombrecandidato1') }}" id="codSis" required>
                 </div>
                 <div class="campo-adicional" id="candidato2">
                 <label for="profesion">Nombre Candidato de Frente 2:</label>
-                <input type="text" placeholder="Escribe el Cnombre aquí..." maxlength="30"
+                <input type="text" placeholder="Escribe el Nombre aquí..." maxlength="30"
                 oninput="this.value = this.value.replace(/[^A-Za-z,. ]+/g, '')"
                 name="nombrecandidato2" value="{{ isset($frente) ? $frente->nombrecandidato1 : old('nombrecandidato2') }}" id="codSis" >
                 </div>
                 <div class="campo-adicional" id="candidato3">
                 <label for="profesion">Nombre Candidato de Frente 3:</label>
-                <input type="text" placeholder="Escribe el Cnombre aquí..." maxlength="30"
+                <input type="text" placeholder="Escribe el Nombre aquí..." maxlength="30"
                 oninput="this.value = this.value.replace(/[^A-Za-z,. ]+/g, '')"
                 name="nombrecandidato3" value="{{ isset($frente) ? $frente->nombrecandidato3 : old('nombrecandidato1') }}" id="codSis" >
                 </div>
                 <div class="campo-adicional" id="candidato4">
                 <label for="profesion">Nombre Candidato de Frente 4:</label>
-                <input type="text" placeholder="Escribe el Cnombre aquí..." maxlength="30"
+                <input type="text" placeholder="Escribe el Nombre aquí..." maxlength="30"
                 oninput="this.value = this.value.replace(/[^A-Za-z,. ]+/g, '')"
                 name="nombrecandidato4" value="{{ isset($frente) ? $frente->nombrecandidato4 : old('nombrecandidato1') }}" id="codSis" >
                 </div>
