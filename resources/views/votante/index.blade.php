@@ -575,7 +575,7 @@ td:first-child {
                                                
                                  
                                  {{-- Inicio Función borrar --}}
-                                    <form id="delete-form-{{ $votante->id }}" action="{{ url('/votante/' . $votante->id) }}" method="post" style="display: inline;">
+                                    <form id="delete-form-{{ $votante->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/votante/' . $votante->id) }}" method="post" style="display: inline;">
                                     @csrf
                                  {{ method_field('DELETE') }}
                                      <button class="buttons-dentro-tabla" title="Borrar Votante" onclick="return confirm ('Quieres borrar este votante?')">
