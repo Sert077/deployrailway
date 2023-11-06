@@ -558,7 +558,7 @@ td:first-child {
                                         <img src="/images/editar.png" alt="Editar" class="formato-imagen" />
                                     </button>
 
-                                    <form id="delete-form-{{ $comunicado->id }}" action="{{ url('/comunicados/' . $comunicado->id) }}" method="post" style="display: inline;">
+                                    <form id="delete-form-{{ $comunicado->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/comunicados/' . $comunicado->id) }}" method="post" style="display: inline;">
                                         @csrf
                                         {{ method_field('DELETE') }}
                                         <button class="buttons-dentro-tabla" title="Borrar Elección" onclick="return confirm ('¿Seguro que quieres borrar este comunicado?')">
