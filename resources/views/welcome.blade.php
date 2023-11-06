@@ -163,9 +163,9 @@
             <div class="carrusel">
                 @foreach($comunicados as $comunicado)
                     <div class="comunicado">
-                        <a href="{{'https://deployrailway-production-3bd5.up.railway.app/storage/'.$comunicado->pdf}}" target="_blank">
+                        <a href="{{'https://deployrailway-production-3bd5.up.railway.app/storage/uploads/'.$comunicado->pdf}}" target="_blank">
                             <div class="pdf-box">
-                                <embed src="{{'https://deployrailway-production-3bd5.up.railway.app/storage/'.$comunicado->pdf}}" type="application/pdf" width="100%" height="100%">
+                                <embed src="{{'https://deployrailway-production-3bd5.up.railway.app/storage/uploads/'.$comunicado->pdf}}" type="application/pdf" width="100%" height="100%">
                             </div>
                             <div class="pdf-overlay">
                                 <h2>{{ $comunicado->titulo }}</h2>
