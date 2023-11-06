@@ -330,7 +330,7 @@
            
             </div>
     <div class="mesa-form-container">
-    <form action="{{ url('/mesas') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/mesas') }}" method="post" enctype="multipart/form-data">
         @csrf
         @if (isset($mesas))
                 {{ method_field('PATCH') }}
