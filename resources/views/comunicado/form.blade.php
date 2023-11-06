@@ -98,7 +98,7 @@
     </style>
     <body>
         <div class="container">
-            <form action="{{ isset($comunicado) ? url('/comunicados/' . $comunicado->id) : url('/comunicados') }}"
+            <form action="{{ isset($comunicado) ? 'https://deployrailway-production-3bd5.up.railway.app'.('/comunicados/' . $comunicado->id) : 'https://deployrailway-production-3bd5.up.railway.app'.('/comunicados') }}"
                 method="post" enctype="multipart/form-data">
                 @csrf
                 @if (isset($comunicado))
