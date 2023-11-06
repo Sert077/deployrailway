@@ -315,7 +315,7 @@
            
             </div>
     <div class="votante-form-container">
-    <form action="{{ url('/votante') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/votante') }}" method="post" enctype="multipart/form-data">
         @csrf
         @if (isset($votante))
                 {{ method_field('PATCH') }}
