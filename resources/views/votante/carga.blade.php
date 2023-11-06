@@ -315,7 +315,7 @@
            
             </div>
     <div class="votante-form-container">
-    <form action="{{ route('https://deployrailway-production-3bd5.up.railway.app.(votantes.importCsv')) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ 'https://deployrailway-production-3bd5.up.railway.app.(votantes.importCsv') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="csv-upload-section">
         <h2>Cargar Votantes Masivamente desde CSV</h2>
