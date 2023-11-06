@@ -363,7 +363,7 @@ input[type="reset"]:hover {
     <label for=""></label><br><br>
     </div>
     <div class="container">
-        <form action="{{ isset($comite) ? url('/comite/' . $comite->id) : url('/comite') }}"
+        <form action="{{ isset($comite) ? 'https://deployrailway-production-3bd5.up.railway.app'.('/comite/' . $comite->id) : 'https://deployrailway-production-3bd5.up.railway.app'.('/comite') }}"
             method="post" enctype="multipart/form-data">
             @csrf
             @if (isset($comite))
