@@ -503,7 +503,7 @@ td:first-child {
             <li><a href="{{ url('/') }}">Inicio</a></li>
             <li><a href="{{ url('/elecciones') }}">Elecciones</a></li>
             <li><a href="{{ url('/comunicados') }}">Comunicados</a></li>
-            <li><a href="#">Documentación</a></li>
+            <li><a href="{{ url('/documentaciones') }}">Documentación</a></li>
             {{-- <li><a href="#">Acerca de</a></li>
             <li><a href="#">Contacto</a></li> --}}
             <li><a href="#">Ingreso</a></li>
@@ -545,11 +545,19 @@ td:first-child {
                 <a href="{{ url('/mesas') }}" class="buttons">Lista de Mesas</a>
             </div>
 
+            <div class="botones">
+                <a href="{{ url('/reporte') }}" class="buttons">Reportes</a>
+            </div>
 
             <div class="botones">
+                <a href="{{ url('/generar-backup') }}" class="buttons" download="backup.sql">Generar Backup</a>
+            </div>
+
+
+            {{--<div class="botones">
                 <input type="text" id="search" placeholder="Buscar...">
                 <button class="buttons" onclick="search()">Buscar</button>
-            </div>
+            </div>--}}
         </div>
 
 
@@ -577,6 +585,11 @@ td:first-child {
                                     
 
                                     <td class="celda-botones">
+
+                                    <button class="buttons-dentro-tabla" title="Previsualizar registro" 
+                                    onclick="window.location.href='{{ route('elecciones.previsualizacion', ['id' => $elecciones->id]) }}'">
+                                        <img src="/images/previ.png" alt="Previsualizar" class="formato-imagen" />
+                                    </button>
 
                                     <button class="buttons-dentro-tabla" title="Imprimir Boleta"
                                         onclick="window.location.href='{{ route('elecciones.boleta', ['id' => $elecciones->id]) }}'">
@@ -606,10 +619,10 @@ td:first-child {
                                         </button>
 
                                         {{-- Inicio Función borrar --}}
-                                           <form id="delete-form-{{ $elecciones->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/elecciones/' . $elecciones->id) }}" method="post" style="display: inline;">
+                                           <form id="delete-form-{{ $elecciones->id }}" action="{{ url('/elecciones/' . $elecciones->id) }}" method="post" style="display: inline;">
                                             @csrf
                                             {{ method_field('DELETE') }}
-                                           <button class="buttons-dentro-tabla" title="Borrar Elección" onclick="return confirm ('Quieres borrar este votante?')">
+                                           <button class="buttons-dentro-tabla" title="Borrar Elección" onclick="return confirm ('Quieres borrar esta eleccion? se borraran todos los registros asociados a esta.')">
                                            <img src="/images/borrar.png" alt="Borrar" class="formato-imagen" />
                                            </button>
                                             </form>
@@ -631,6 +644,8 @@ td:first-child {
                                             }
                                         }
                                     </script>
+
+                                
 
                                     <div class="footer">
 
