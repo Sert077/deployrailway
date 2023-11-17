@@ -480,12 +480,12 @@
                  @if (isset($eleccion) && $eleccion->convocatoria)
                   <div style="display: flex; align-items: center;">
                   <p style="margin-bottom: 0; margin-right: 10px;">Nombre del archivo: {{ $eleccion->convocatoria }}</p>
-                    <a href="{{ asset('storage/' . $eleccion->convocatoria) }}" download="Convocatoria.pdf"> 
+                    <a href="{{ asset('https://deployrailway-production-3bd5.up.railway.app/storage/' . $eleccion->convocatoria) }}" download="Convocatoria.pdf"> 
                   <img src="{{ asset('/images/descargar.png') }}" alt="Botón Descargar PDF" class="boton_descargar" title="Descargar Convocatoria" style="cursor: pointer;">
                    </a>
                   </div>
                  @endif
-                 <embed src="{{ asset('storage/' . $eleccion->convocatoria) }}" type="">
+                 <embed src="{{ asset('https://deployrailway-production-3bd5.up.railway.app/storage/' . $eleccion->convocatoria) }}" type="">
                  <br><br>
                         
                     <h2 class="forms" style="color: rgba(4, 36, 60, 0.99); font-size: 20px;  font-weight: 400; word-wrap: break-word;" >Tipo de Eleccion:</h2>
