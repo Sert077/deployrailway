@@ -510,7 +510,7 @@ td:first-child {
             <li><a href="{{ url('/') }}">Inicio</a></li>
             <li><a href="{{ url('/elecciones') }}">Elecciones</a></li>
             <li><a href="{{ url('/comunicados') }}">Comunicados</a></li>
-            <li><a href="#">Documentación</a></li>
+            <li><a href="{{ url('/documentaciones') }}">Documentación</a></li>
             {{-- <li><a href="#">Acerca de</a></li>
             <li><a href="#">Contacto</a></li> --}}
             <li><a href="#">Ingreso</a></li>
@@ -594,6 +594,7 @@ td:first-child {
                                 <th>Id de Eleccion</th>
                                 <th>N° de Mesa.</th>
                                 <th>Tipo Votante</th>
+                                <th>Votantes en mesa</th>
                                 <th>Facultad</th>
                                 <th>Ubicacion</th>
                                 <th>Nº de votantes</th>
@@ -606,6 +607,7 @@ td:first-child {
                                     <td>{{ $mesas->id_de_eleccion }}</td>
                                     <td>{{ $mesas->numeromesa}}</td>
                                     <td>{{ $mesas->votantemesa }}</td>
+                                    <td>{{ $mesas->votantesenmesa}}</td>
                                     <td>{{ $mesas->facultadmesa }}</td>
                                     <td>{{ $mesas->ubicacionmesa }}</td>
                                     <td>{{ $mesas->numerodevotantes }}</td>
@@ -632,8 +634,10 @@ td:first-child {
                                 </button>
 
 
-                                    
-
+                                <button class="buttons-dentro-tabla" title="Previsualizar acta" 
+                                    onclick="window.location.href='{{ url('/mesas/' . $mesas->id . '/acta')}}'" class="buttons'">
+                                        <img src="/images/previ.png" alt="Previsualizar" class="formato-imagen" />
+                                    </button>
 
 
                                     <button class="buttons-dentro-tabla" title="Editar Elección"
@@ -643,7 +647,7 @@ td:first-child {
                                                
                                  
                                  {{-- Inicio Función borrar --}}
-                                    <form id="delete-form-{{ $mesas->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/mesas/' . $mesas->id) }}" method="post" style="display: inline;">
+                                    <form id="delete-form-{{ $mesas->id }}" action="{{ url('/mesas/' . $mesas->id) }}" method="post" style="display: inline;">
                                     @csrf
                                  {{ method_field('DELETE') }}
                                      <button class="buttons-dentro-tabla" title="Borrar Mesa" onclick="return confirm ('Quieres borrar esta mesa?')">
