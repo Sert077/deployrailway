@@ -409,7 +409,7 @@ input[type="reset"]:hover {
     <br>
    
     <div class="container">
-        <form action="{{ url('/elecciones/' . $eleccion->id . '/guardarResultados') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/elecciones/' . $eleccion->id . '/guardarResultados') }}" method="post" enctype="multipart/form-data">
             @csrf
             {{ method_field('PATCH') }}
 
