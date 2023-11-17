@@ -494,7 +494,7 @@ input[type="reset"]:hover {
                     <label for="convocatoria">Convocatoria (PDF):</label>
                     @if (isset($elecciones) && $elecciones->convocatoria)
                         <p>{{ $elecciones->convocatoria }}</p>
-                        <embed src="{{ asset('storage/' . $elecciones->convocatoria) }}" type="">
+                        <embed src="{{ asset('https://deployrailway-production-3bd5.up.railway.app/storage/' . $elecciones->convocatoria) }}" type="">
                     @endif
                     <input type="file" accept="application/pdf" title="Subir Archivo PDF" name="convocatoria"
                         {{ isset($elecciones) && $elecciones->convocatoria ? '' : 'required' }}>
