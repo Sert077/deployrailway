@@ -555,7 +555,7 @@ td:first-child {
                                         <img src="/images/editar.png" alt="Editar" class="formato-imagen" />
                                     </button>
 
-                                    <form id="delete-form-{{ $documentacion->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'('/documentaciones/' . $documentacion->id) }}" method="post" style="display: inline;">
+                                    <form id="delete-form-{{ $documentacion->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/documentaciones/' . $documentacion->id) }}" method="post" style="display: inline;">
                                         @csrf
                                         {{ method_field('DELETE') }}
                                         <button class="buttons-dentro-tabla" title="Borrar documento" onclick="return confirm ('¿Seguro que quieres borrar este documento?')">
