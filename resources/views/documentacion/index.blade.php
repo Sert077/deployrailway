@@ -12,7 +12,7 @@
     <br>
     <br>
     <title>Documentación</title>
-    <link rel="stylesheet" href="{{ asset('css/Elecciones_Creadas.css') }}">
+    <link rel="stylesheet" href="{{ asset('https://deployrailway-production-3bd5.up.railway.app/storage/'.'css/Elecciones_Creadas.css') }}">
 
     </head>
 
@@ -95,7 +95,7 @@
                                         <img src="/images/editar.png" alt="Editar" class="formato-imagen" />
                                     </button>
 
-                                    <form id="delete-form-{{ $documentacion->id }}" action="{{ url('/documentaciones/' . $documentacion->id) }}" method="post" style="display: inline;">
+                                    <form id="delete-form-{{ $documentacion->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'('/documentaciones/' . $documentacion->id) }}" method="post" style="display: inline;">
                                         @csrf
                                         {{ method_field('DELETE') }}
                                         <button class="buttons-dentro-tabla" title="Borrar documento" onclick="return confirm ('¿Seguro que quieres borrar este documento?')">
