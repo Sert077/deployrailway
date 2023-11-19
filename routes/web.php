@@ -9,6 +9,7 @@ use App\Http\Controllers\ComiteController;
 use App\Http\Controllers\FrenteController;
 use App\Http\Controllers\MesaController;
 use App\Http\Controllers\JuradoController;
+use App\Http\Controllers\DocumentacionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
