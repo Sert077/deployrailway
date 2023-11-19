@@ -619,7 +619,7 @@ td:first-child {
                                         </button>
 
                                         {{-- Inicio Función borrar --}}
-                                           <form id="delete-form-{{ $elecciones->id }}" action="{{ url('/elecciones/' . $elecciones->id) }}" method="post" style="display: inline;">
+                                           <form id="delete-form-{{ $elecciones->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/elecciones/' . $elecciones->id) }}" method="post" style="display: inline;">
                                             @csrf
                                             {{ method_field('DELETE') }}
                                            <button class="buttons-dentro-tabla" title="Borrar Elección" onclick="return confirm ('Quieres borrar esta eleccion? se borraran todos los registros asociados a esta.')">
