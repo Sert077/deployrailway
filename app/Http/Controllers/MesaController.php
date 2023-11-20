@@ -133,6 +133,41 @@ class MesaController extends Controller
     
         return redirect('/mesas')->with('success', 'Las mesas se han guardado con éxito.');
     }
+    
+    // Función actualizada para asignar mesas por tipo
+    private function asignarMesasPorTipo($mesaActual, $votantes, $votantesPorMesa, $idDeEleccion, $tipoVotante)
+    {
+        $votantesTipo = $votantes->where('tipoVotante', $tipoVotante);
+    
+        $cantidadMesas = ceil($votantesTipo->count() / $votantesPorMesa);
+    
+        for ($i = 0; $i < $cantidadMesas; $i++) {
+            $datosMesas = request()->except('_token');
+            $datosMesas['numeromesa'] = $mesaActual;
+            $datosMesas['id_de_eleccion'] = $idDeEleccion; // Asigna el id de la elección
+            $datosMesas['votantemesa'] = $tipoVotante; // Asigna el tipo de votante
+    
+            // Asignar el apellido del primer votante a la columna votantesenmesa
+            $primerVotante = $votantesTipo->slice($i * $votantesPorMesa)->first();
+    
+            // Asignar el apellido del último votante a la columna votantesenmesa
+            $ultimoVotante = $votantesTipo->slice($i * $votantesPorMesa, $votantesPorMesa)->last();
+    
+            if ($primerVotante && $ultimoVotante) {
+                $datosMesas['votantesenmesa'] = "De {$primerVotante->apellidoPaterno} Hasta {$ultimoVotante->apellidoPaterno}";
+            }
+    
+            // Asigna la cantidad correcta de votantes a la mesa
+            $votantesAsignados = min($votantesPorMesa, $votantesTipo->count() - ($i * $votantesPorMesa));
+            $datosMesas['numerodevotantes'] = $votantesAsignados;
+    
+            Mesa::insert($datosMesas);
+    
+            $mesaActual++;
+        }
+    
+        return $mesaActual;
+    }
 
     /**
      * Display the specified resource.
