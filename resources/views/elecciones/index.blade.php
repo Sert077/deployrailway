@@ -519,7 +519,7 @@ td:first-child {
         <br>
         <br>
         <center>
-            <h1>Lista de Elecciones Creadas</h1>
+            <h1>Lista de Elecciones Activas</h1>
         </center>
         <br>
         <br>
