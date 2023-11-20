@@ -198,9 +198,28 @@ public function showCarga(){
 
     $handle = fopen($file->getPathname(), 'r');
 
+    // Variable de control para omitir la primera fila
+    $skipFirstRow = true;
+
     if ($handle !== false) {
         while (($row = fgetcsv($handle)) !== false) {
-            // Procesa y almacena cada fila del archivo CSV en la base de datos
+            // Omitir la primera fila
+            if ($skipFirstRow) {
+                $skipFirstRow = false;
+                continue;
+            }
+
+            $existingVotante = Votante::where('ideleccion', $request->ideleccion)
+                ->where(function ($query) use ($row) {
+                    $query->where('codSis', $row[3])
+                        ->orWhere('CI', $row[4]);
+                })
+                ->first();
+
+            if ($existingVotante) {
+                continue;
+            }
+
             Votante::create([
                 'ideleccion' => $request->ideleccion,
                 'nombres' => $row[0],
@@ -217,10 +236,11 @@ public function showCarga(){
                 'email' => $row[11],
             ]);
         }
+
         fclose($handle);
     }
 
-    return redirect('/elecciones')->with('success', 'Votantes importados exitosamente');
+    return redirect('/votante')->with('success', 'Votantes importados exitosamente');
 }
 
 
