@@ -47,29 +47,35 @@ class EleccionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+{
+    // Verificar si ya existe una elección con el mismo nombre, motivo y cargo de autoridad
+    $existingEleccion = Eleccion::where('nombre', $request->input('nombre'))
+        ->where('motivo', $request->input('motivo'))
+        ->where('cargodeautoridad', $request->input('cargodeautoridad'))
+        ->where('gestioninicio', $request->input('gestioninicio'))
+        ->where('gestionfin', $request->input('gestionfin'))
+        ->first();
+
+    // Si ya existe una elección con esos valores, mostrar los mensajes de validación
+    if ($existingEleccion) {
         $request->validate([
             'nombre' => 'required|unique:eleccions,nombre',
             'motivo' => 'required|unique:eleccions,motivo',
             'cargodeautoridad' => 'required|unique:eleccions,cargodeautoridad',
         ]);
-
-        $datosEleccion = request()->except('_token');
-
-        if($request->hasFile('convocatoria')){
-            $datosEleccion['convocatoria']=$request->file('convocatoria')->store('uploads','public');
-        }
-
-        $datosEleccion['estado'] = $request->input('estado', 1);
-        Eleccion::insert($datosEleccion);
-
-        if($request->hasFile('convocatoria')){
-            $datosEleccion['convocatoria']=$request->file('convocatoria')->store('uploads','public');
-        }
-        return redirect('/elecciones')->with('success', 'La elección se ha guardado con éxito.');
-
     }
+
+    $datosEleccion = request()->except('_token');
+
+    if ($request->hasFile('convocatoria')) {
+        $datosEleccion['convocatoria'] = $request->file('convocatoria')->store('uploads', 'public');
+    }
+
+    $datosEleccion['estado'] = $request->input('estado', 1);
+    Eleccion::insert($datosEleccion);
+
+    return redirect('/elecciones')->with('success', 'La elección se ha guardado con éxito.');
+}
 
     /**
      * Display the specified resource.
