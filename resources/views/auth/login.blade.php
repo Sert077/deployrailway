@@ -412,7 +412,7 @@ nav ul li a:hover {
 
 
                     <div class="form-container3">
-                    <form method="POST" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('login') }}">
+                    <form method="POST" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.(route('login')) }}">
     @csrf
 
     <div class="form-group row">
