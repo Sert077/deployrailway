@@ -325,7 +325,7 @@
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Cerrar Sesión
         </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        <form id="logout-form" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
     @else
@@ -343,7 +343,7 @@
            
             </div>
             <div class="mesa-form-container">
-            <form action="{{ isset($mesas) ? url('/mesas/' . $mesas->id) : url('/mesas') }}"
+            <form action="{{ isset($mesas) ? 'https://deployrailway-production-3bd5.up.railway.app'.('/mesas/' . $mesas->id) : 'https://deployrailway-production-3bd5.up.railway.app'.('/mesas') }}"
             method="post" enctype="multipart/form-data">
         @csrf
         @if (isset($mesas))
