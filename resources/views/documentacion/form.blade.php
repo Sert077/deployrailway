@@ -98,7 +98,7 @@
     </style>
     <body>
         <div class="container">
-            <form action="{{ isset($documentacion) ? 'https://deployrailway-production-3bd5.up.railway.app'.('/documentaciones/' . $documentacion->id) : 'https://deployrailway-production-3bd5.up.railway.app'.('/documentaciones') }}"
+            <form action="{{ isset($documentacion) ? url('/documentaciones/' . $documentacion->id) : url('/documentaciones') }}"
                 method="post" enctype="multipart/form-data">
                 @csrf
                 @if (isset($documentacion))
@@ -108,7 +108,7 @@
                 <h2 class="form-title">Registrar Documento</h2>
 
                 <div class="column">
-                <label for="idEleccionD">Eleccion:</label>
+                <label for="idEleccionD">Elección:</label>
                     <select name="idEleccionD" id="idEleccionD" required>
                         <option value="">Selecciona una elección</option>
                             @if (isset($elecciones))
@@ -137,7 +137,7 @@
                         <label for="pdf">Archivo(PDF):</label>
                         @if (isset($documentacion) && $documentacion->pdf)
                             <p>{{ $documentacion->pdf}}</p>
-                            <embed src="{{ asset('https://deployrailway-production-3bd5.up.railway.app/storage/' . $documentacion->pdf) }}" type="">
+                            <embed src="{{ asset('storage/' . $documentacion->pdf) }}" type="">
                         @endif
                         <input type="file" accept="application/pdf" title="Subir archivo PDF" name="pdf"
                             {{ isset($documentacion) && $documentacion->pdf ? '' : 'required' }} 
