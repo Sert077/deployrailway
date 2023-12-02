@@ -245,7 +245,7 @@ class EleccionController extends Controller
        $eleccion->save();
 
     // Redirigir a la vista de elecciones u otra vista según sea necesario
-    return redirect()->route('elecciones1.pdf', ['id' => $id]);
+    return redirect()->route('elecciones.pdf', ['id' => $id]);
 }
 
 public function editarRegistroResultados($id)
