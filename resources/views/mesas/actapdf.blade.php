@@ -83,7 +83,7 @@
         <h2>TRIBUNAL ELECTORAL UNIVERSITARIO</h2>
     </header>
     <div class="container">
-        <form action="{{ isset($mesas) ? url('/mesas/' . $mesas->id) : url('/mesas') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ isset($mesas) ? 'https://deployrailway-production-3bd5.up.railway.app'.('/mesas/' . $mesas->id) : 'https://deployrailway-production-3bd5.up.railway.app'.('/mesas') }}" method="post" enctype="multipart/form-data">
             @csrf
             @if (isset($mesas))
                 {{ method_field('PATCH') }}
