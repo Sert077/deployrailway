@@ -401,7 +401,7 @@ input[type="reset"]:hover {
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Cerrar Sesión
         </a>
-        <form id="logout-form" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/logout') }}" method="POST" style="display: none;">
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
     @else
@@ -422,7 +422,7 @@ input[type="reset"]:hover {
     <br>
    
     <div class="container">
-    <form action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/elecciones/' . $eleccion->id . '/guardarResultados') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url('/elecciones/' . $eleccion->id . '/guardarResultados') }}" method="post" enctype="multipart/form-data">
     @csrf
     {{ method_field('PATCH') }}
         
