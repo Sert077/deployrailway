@@ -360,7 +360,7 @@ nav ul li a:hover {
                     <div class="form-title" style="font-weight: bold;">{{ __('Registrar') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ 'https://deployrailway-production-3bd5.up.railway.app/'.('register') }}">
+                        <form method="POST" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/register') }}">
                             @csrf
 
                             <div class="form-group row">
