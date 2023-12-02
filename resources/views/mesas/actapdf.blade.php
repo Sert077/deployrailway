@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acta de Elección</title>
-    <!-- Agrega tus enlaces a estilos, si es necesario -->
 </head>
 
 <style>
@@ -13,11 +12,24 @@
 
     body {
         font-family: "Uni Sans" , sans-serif;
-        line-height: 1.6;
-        font-size: 12px;
-        margin: 20px; /* Agregado un margen al contenedor */
+        line-height: 1.3;
+        font-size: 11px;
+        margin: 0; /* Elimina el margen predeterminado */
+        padding: 10px;
     }
 
+    header {
+        text-align: center;
+    }
+
+    header h2 {
+        margin-bottom: 10px;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
     .container {
         max-width: 800px;
         margin: 0 auto;
@@ -25,18 +37,20 @@
 
     h2 {
         text-align: center;
-        font-size: 12px;
+        font-size: 11px;
         margin-bottom: 10px; /* Espaciado inferior */
     }
 
     h3, p {
-        font-size: 12px;
+        font-size: 11px;
+        
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
         margin: 10px 0; /* Ajuste en el margen de las tablas */
+        border: 1px solid #000;
     }
 
     table, th, td {
@@ -44,8 +58,9 @@
     }
 
     th, td {
-        padding: 10px;
+        padding: 4px;
         text-align: left;
+        line-height: 1;
     }
 
     th {
@@ -63,6 +78,10 @@
 </style>
 
 <body>
+    <header>
+        <h2>UNIVERSIDAD MAYOR DE SAN SIMÓN</h2>
+        <h2>TRIBUNAL ELECTORAL UNIVERSITARIO</h2>
+    </header>
     <div class="container">
         <form action="{{ isset($mesas) ? url('/mesas/' . $mesas->id) : url('/mesas') }}" method="post" enctype="multipart/form-data">
             @csrf
@@ -70,12 +89,11 @@
                 {{ method_field('PATCH') }}
             @endif
 
-            <h2>UNIVERSIDAD MAYOR DE SAN SIMÓN</h2>
-            <h2>TRIBUNAL ELECTORAL UNIVERSITARIO</h2>
+            
             <h3>Elección a {{ $eleccion->nombre }}</h3> 
             <h2>ACTA DE APERTURA</h2>
 
-            <p>En Cochabamba, a las {{ $eleccion->fecha }}, de conformidad con la Convocatoria y el Reglamento Electoral Universitario, se dio inicio al funcionamiento de la mesa {{ $mesa->numeromesa }}.</p>
+            <p>En Cochabamba, a hora {{$horaActual}} del día {{ $fechaFormateada}}, de conformidad con la Convocatoria y el Reglamento Electoral Universitario, se dio inicio al funcionamiento de la mesa {{ $mesa->numeromesa }}.</p>
 
             <!-- Acta de Apertura - Tabla de Jurados -->
             <table>
@@ -87,6 +105,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    
                     @foreach ($jurados as $jurado)
                         <tr>
                             <td>{{ $jurado->tipojurado }}</td>
@@ -100,7 +119,7 @@
             <!-- Acta de Cierre - Tabla de Resultados de Frentes -->
             <h2>ACTA DE CIERRE</h2>
 
-            <p>A las horas... transcurridas... horas de votación continua se procedió al cierre de la mesa {{ $mesa->numeromesa }}, efectuándose inmediatamente el escrutinio de votos, con los siguientes resultados:</p>
+            <p>Transcurrida la votación continua se procedió al cierre de la mesa {{ $mesa->numeromesa }}, efectuándose inmediatamente el escrutinio de votos, con los siguientes resultados:</p>
 
             <table>
                 <thead>
@@ -125,6 +144,7 @@
             <h3>Total de votos emitidos:</h3>
 
             <!-- Tabla de Jurados al final -->
+            <p>Con lo que concluyó el acto en conformidad suscribimos nuestras firmas:</p> 
             <table>
                 <thead>
                     <tr>
@@ -134,6 +154,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($frentes as $frente)
+                        <tr>
+                            <td>Delegado de frente {{$frente->nombrefrente}}</td>
+                            <td>{{ $frente->nombrecandidato1 }}</td>
+                            <td></td>
+                        </tr>
+                    @endforeach
                     @foreach ($jurados as $jurado)
                         <tr>
                             <td>{{ $jurado->tipojurado }}</td>
@@ -143,10 +170,13 @@
                     @endforeach
                 </tbody>
             </table>
-
+            <h3>Observaciones: 
+                <p style="line-height: 1;">_____________________________________________________________________________________________________________</p>
+                <p style="line-height: 1;">_____________________________________________________________________________________________________________</p>
+                <p style="line-height: 1;">_____________________________________________________________________________________________________________</p>
+            </h3>
         </form>
     </div>
 </body>
 
 </html>
-

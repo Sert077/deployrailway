@@ -9,7 +9,7 @@
     <br>
     <br>
     <br>
-    <title>Mesas</title>
+    <title>Lista de Mesas</title>
     
     
 </head>
@@ -513,7 +513,20 @@ td:first-child {
             <li><a href="{{ url('/documentaciones') }}">Documentación</a></li>
             {{-- <li><a href="#">Acerca de</a></li>
             <li><a href="#">Contacto</a></li> --}}
-            <li><a href="#">Ingreso</a></li>
+            <li>
+    @if(auth()->check())
+        {{-- Si el usuario ha iniciado sesión, mostrar el enlace de Cerrar Sesión --}}
+        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            Cerrar Sesión
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    @else
+        {{-- Si el usuario no ha iniciado sesión, mostrar el enlace de Ingreso --}}
+        <a href="{{ url('/iniciarsesion') }}">Ingreso</a>
+    @endif
+</li>
             <img src="/images/img.png"  class="company-logo">
         </ul>
         <div class="menu-icon"></div>
@@ -567,10 +580,11 @@ td:first-child {
         <br>
         <br>
         <center>
-            <h1>Lista de mesas</h1>
+            <h1>Lista de Mesas</h1>
         </center>
         <br>
         <br>
+        @if(auth()->user()->name == 'admin')
         <div class="container botonesss">
 
 
@@ -581,7 +595,7 @@ td:first-child {
 
 
         </div>
-
+            @endif
 
 
         <br>
@@ -592,13 +606,15 @@ td:first-child {
                         <thead>
                             <tr>
                                 <th>Id de Eleccion</th>
-                                <th>N° de Mesa.</th>
+                                <th>N° de Mesa</th>
                                 <th>Tipo Votante</th>
                                 <th>Votantes en mesa</th>
-                                <th>Facultad</th>
-                                <th>Ubicacion</th>
+                                <th>Carrera</th>
+                                <th>Ubicación</th>
                                 <th>Nº de votantes</th>
+                                @if(auth()->user()->name == 'admin')
                                 <th>Acciones</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -608,11 +624,11 @@ td:first-child {
                                     <td>{{ $mesas->numeromesa}}</td>
                                     <td>{{ $mesas->votantemesa }}</td>
                                     <td>{{ $mesas->votantesenmesa}}</td>
-                                    <td>{{ $mesas->facultadmesa }}</td>
+                                    <td>{{ $mesas->carreramesa }}</td>
                                     <td>{{ $mesas->ubicacionmesa }}</td>
                                     <td>{{ $mesas->numerodevotantes }}</td>
                                     
-
+                                    @if(auth()->user()->name == 'admin')
                                     <td class="celda-botones">
                                     
                                     {{-- <a href="{{ url('/mesas/' . $mesas->id . '/generate-jurados') }}" class="buttons" 
@@ -622,6 +638,21 @@ td:first-child {
                                     <a href="{{ url('/mesas/' . $mesas->id . '/lista-jurados') }}" class="buttons"
                                     style="background-color: 04243C; color: #FFF; padding: 5px 10px; border: none; cursor: pointer;">Lista de Jurados</a> --}}
 
+                                    <button class="buttons-dentro-tabla" title="Informacion Mesa" 
+                                    onclick="window.location.href='{{ route('mesas.previsualizacion', ['id' => $mesas->id]) }}'">
+                                        <img src="/images/informacion.png" alt="Previsualizar" class="formato-imagen" />
+                                    </button>
+
+                                     <button class="buttons-dentro-tabla" title="Registrar Resultados"
+                                      onclick="window.location.href='{{ route('mesas.registroResultados', $mesas->id) }}'" class="buttons'" >
+                                     <img src="/images/registrarresultado.png" alt="Registrar Resultados" class="formato-imagen" />
+                                     </button>
+
+                                     <button class="buttons-dentro-tabla" title="Editar Resultados"
+                                      onclick="window.location.href='{{ route('mesas.editarResultados', $mesas->id) }}'" class="buttons'" >
+                                     <img src="/images/editarresultado.png" alt="Registrar Resultados" class="formato-imagen" />
+                                     </button>
+                                    
                                     <button class="buttons-dentro-tabla" title="Generar Jurados"
                                     onclick="window.location.href='{{ url('/mesas/' . $mesas->id . '/generate-jurados') }}'" class="buttons'" >
                                    <img src="/images/generarjurados.png" alt="Editar" class="formato-imagen" />
@@ -647,7 +678,7 @@ td:first-child {
                                                
                                  
                                  {{-- Inicio Función borrar --}}
-                                    <form id="delete-form-{{ $mesas->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/mesas/' . $mesas->id) }}" method="post" style="display: inline;">
+                                    <form id="delete-form-{{ $mesas->id }}" action="{{ url('/mesas/' . $mesas->id) }}" method="post" style="display: inline;">
                                     @csrf
                                  {{ method_field('DELETE') }}
                                      <button class="buttons-dentro-tabla" title="Borrar Mesa" onclick="return confirm ('Quieres borrar esta mesa?')">
@@ -656,21 +687,8 @@ td:first-child {
                                        </form>
                                  {{-- Fin función borrar --}}
                                  
-                                 </td>
-                            
-                                      
-
-
-
-
-          
-       
-
-
-
-
-
-
+                                 </td>                                                                  
+                                 @endif
                                 
                           </tr>
                           @endforeach
@@ -687,7 +705,7 @@ td:first-child {
         <div class="footer">
 
 <div class="footer-izq">
-    Av. Oquendo y calle Jordán asd
+    Av. Oquendo y calle Jordán 
     <br>
     Mail: Tribunal_electoral@umss.edu
     <br>
@@ -702,9 +720,9 @@ td:first-child {
 
 </div>
 <div class="footer-der">
-    <a href="{{ url('/') }}">Acerca de</a>
-    <span>&nbsp;|&nbsp;</span> <!-- Para agregar un separador -->
-    <a href="{{ url('/') }}">Contactos</a>
+            <a href="{{ url('/acercade') }}">Acerca de | Contactos</a>
+            <!--<span>&nbsp;|&nbsp;</span> 
+            <a href="#">Contactos</a>-->
 
 </div>
 

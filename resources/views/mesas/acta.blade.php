@@ -216,6 +216,11 @@ nav ul li a:hover{
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         max-width: 1000px;
     }
+    h2 {
+        text-align: center;
+        font-size: 20px;
+        margin-bottom: 5px; /* Espaciado inferior */
+    }
     .table-column {
             flex: 1;
             padding: 10px;
@@ -326,7 +331,20 @@ nav ul li a:hover{
             <li><a href="{{ url('/documentaciones') }}">Documentación</a></li>
             {{-- <li><a href="#">Acerca de</a></li>
             <li><a href="#">Contacto</a></li> --}}
-            <li><a href="#">Ingreso</a></li>
+            <li>
+    @if(auth()->check())
+        {{-- Si el usuario ha iniciado sesión, mostrar el enlace de Cerrar Sesión --}}
+        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            Cerrar Sesión
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    @else
+        {{-- Si el usuario no ha iniciado sesión, mostrar el enlace de Ingreso --}}
+        <a href="{{ url('/iniciarsesion') }}">Ingreso</a>
+    @endif
+</li>
             <img src="/images/img.png"  class="company-logo">
 
         </ul>
@@ -355,13 +373,10 @@ nav ul li a:hover{
             <h3>Elección a {{ $eleccion->nombre }} </h3>
          
             <h2>ACTA DE APERTURA</h2>
-            <br><br>
-            <p>En Cochabamba, a hora .......... del día {{ $eleccion->fecha }} de conformidad a lo establecido por la Convocatoria y el Reglamento Electoral Universitario, se dio inicio al funcionamiento de la mesa {{ $mesa->numeromesa }}.</p>
-        
+           
+            <p>En Cochabamba, a hora {{$horaActual}} del día {{ $fechaFormateada}}, de conformidad con la Convocatoria y el Reglamento Electoral Universitario, se dio inicio al funcionamiento de la mesa {{ $mesa->numeromesa }}.</p>
+              
             <div class="container">
-                <p>Con lo que concluyó el acto a horas ...... y en conformidad suscribimos nuestras firmas:</p>
-
-                
                     <table id="actasTable" class="vistatabla">
                         <thead>
                             <tr>
@@ -384,8 +399,8 @@ nav ul li a:hover{
             </div>
 
             <h2>ACTA DE CIERRE</h2>
-            <br><br>
-            <p>A horas.......... transcurridas.......... horas de votación continua se procedió al cierre de la mesa {{ $mesa->numeromesa }} efectuándose inmediatamente el escrutinio de votos, con los siguientes resultados:</p>
+        
+            <p>Transcurrida la votación continua se procedió al cierre de la mesa {{ $mesa->numeromesa }} efectuándose inmediatamente el escrutinio de votos, con los siguientes resultados:</p>
 
         <!-- Add your content for results here -->
 
@@ -411,9 +426,9 @@ nav ul li a:hover{
                 <h3>Votos blancos:</h3>
                 <h3>Votos nulos:</h3>
                 <h3>Total de votos emitidos:</h3>
-                <br><br>
-                <p>Con lo que concluyó el acto a horas ...... y en conformidad suscribimos nuestras firmas:</p>
-            <div class="container">        
+            
+            <div class="container">    
+                <p>Con lo que concluyó el acto en conformidad suscribimos nuestras firmas:</p>    
                 <table id="actasTable" class="vistatabla">
                     <thead>
                         <tr>
@@ -423,6 +438,13 @@ nav ul li a:hover{
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($frentes as $frente)
+                            <tr>
+                                <td>Delegado de frente {{$frente->nombrefrente}}</td>
+                                <td>{{ $frente->nombrecandidato1 }}</td>
+                                <td></td>
+                            </tr>
+                        @endforeach
                         @foreach ($jurados as $jurado)
                             <tr>
                                 <td>{{ $jurado->tipojurado }}</td>
@@ -432,6 +454,12 @@ nav ul li a:hover{
                         @endforeach
                     </tbody>
                 </table>
+                <h3>Observaciones: 
+                    <p>______________________________________________________________________________________</p>
+                    <p>______________________________________________________________________________________</p>
+                    <p>______________________________________________________________________________________</p>
+                </h3>
+                
             </div>
     
         </form>
@@ -457,9 +485,9 @@ nav ul li a:hover{
 
             </div>
             <div class="footer-der">
-                <a href="{{ url('/') }}">Acerca de</a>
-                <span>&nbsp;|&nbsp;</span> <!-- Para agregar un separador -->
-                <a href="{{ url('/') }}">Contactos</a>
+            <a href="{{ url('/acercade') }}">Acerca de | Contactos</a>
+            <!--<span>&nbsp;|&nbsp;</span> 
+            <a href="#">Contactos</a>-->
 
             </div>
 
