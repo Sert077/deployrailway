@@ -301,7 +301,7 @@
                                                 </a>
                                             </button>    
                                             <button class="buttons-dentro-tabla" title="Imprimir Reporte">
-                                                <a href="{{ asset('storage/uploads/' . $resultado->id . '.pdf') }}" class="reporte" target="_blank">
+                                                <a href="{{ asset('https://deployrailway-production-3bd5.up.railway.app/storage/uploads/' . $resultado->id . '.pdf') }}" class="reporte" target="_blank">
                                                     Convocatoria
                                                 </a>
                                             </button>                   
@@ -353,7 +353,7 @@
                                                 Reporte</a>
                                         </button> 
                                         <button class="buttons-dentro-tabla" title="Imprimir Reporte">
-                                            <a href="{{ asset('storage/uploads/' . $eleccion->id . '.pdf') }}" class="reporte" target="_blank">
+                                            <a href="{{ asset('https://deployrailway-production-3bd5.up.railway.app/storage/uploads/' . $eleccion->id . '.pdf') }}" class="reporte" target="_blank">
                                                 Convocatoria
                                             </a>
                                         </button>                                                                        
