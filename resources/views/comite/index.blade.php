@@ -580,7 +580,7 @@ td:first-child {
 
                                   
                                 {{-- Inicio Función borrar --}}
-                                      <form id="delete-form-{{ $comite->id }}" action="{{ url('/comite/' . $comite->id) }}" method="post" style="display: inline;">
+                                      <form id="delete-form-{{ $comite->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/comite/' . $comite->id) }}" method="post" style="display: inline;">
                                      @csrf
                                 {{ method_field('DELETE') }}
                                       <button class="buttons-dentro-tabla" title="Borrar Elección" onclick="return confirm ('Quieres borrar este miembro del comite?')">
