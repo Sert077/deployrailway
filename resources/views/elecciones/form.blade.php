@@ -381,7 +381,7 @@ input[type="reset"]:hover {
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Cerrar Sesión
         </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        <form id="logout-form" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
     @else
@@ -398,7 +398,7 @@ input[type="reset"]:hover {
         <label for=""></label><br><br>
     </div>
     <div class="container">
-        <form action="{{ isset($elecciones) ? url('/elecciones/' . $elecciones->id) : url('/elecciones') }}"
+        <form action="{{ isset($elecciones) ? 'https://deployrailway-production-3bd5.up.railway.app'.('/elecciones/' . $elecciones->id) : 'https://deployrailway-production-3bd5.up.railway.app'.('/elecciones') }}"
             method="post" enctype="multipart/form-data">
             @csrf
             @if (isset($elecciones))
@@ -503,7 +503,7 @@ input[type="reset"]:hover {
                     <label for="convocatoria">Convocatoria (PDF):</label>
                     @if (isset($elecciones) && $elecciones->convocatoria)
                         <p>{{ $elecciones->convocatoria }}</p>
-                        <embed src="{{ asset('storage/' . $elecciones->convocatoria) }}" type="">
+                        <embed src="{{ asset('https://deployrailway-production-3bd5.up.railway.app/storage/' . $elecciones->convocatoria) }}" type="">
                     @endif
                     <input type="file" accept="application/pdf" title="Subir Archivo PDF" name="convocatoria"
                         {{ isset($elecciones) && $elecciones->convocatoria ? '' : 'required' }}>
