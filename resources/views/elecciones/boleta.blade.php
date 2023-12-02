@@ -182,7 +182,7 @@
             <div class="frente-item">
                 <div class="frente-details">
                     <p>{{ $frente->nombrefrente }}</p>
-                    <img src="{{ asset('storage').'/'.$frente->fotofrente }}" alt="" width="250" height="250">
+                    <img src="{{ 'https://deployrailway-production-3bd5.up.railway.app'.'/'.$frente->fotofrente }}" alt="" width="250" height="250">
                     <p>Cargo: {{ $frente->cargopostulacion }}</p>
                     <br><br>
                     <p>Marca tu voto aqui:</p>
