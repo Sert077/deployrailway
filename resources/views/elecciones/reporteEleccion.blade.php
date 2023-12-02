@@ -101,25 +101,20 @@
         }
 
         input[type="submit"] {
-            background-color: #04243C;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        .cancelar {
-            background-color: #A70606;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        .botones-imprimir {
-            text-align: right;
+                background-color: #04243C;
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+                margin-bottom: 10px;
+                z-index: 999;
+                position: fixed;
+                top: 350px;
+                right: 100px;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
         }
         
 
@@ -128,10 +123,7 @@
 </head>
 <body>
     <div class="contenedor">
-        <div class="botones-imprimir">
-            <input type="submit" value="{{ 'Imprimir' }}" onclick="imprimirBoleta()" id="botonImprimir">
-            <input type="button" value="Volver a elecciones" onclick="confirmarCancelacion()" class= "cancelar">
-        </div>
+
         <br>
         <h2>Reporte de la elección</h2>
         <br><br>
@@ -244,25 +236,21 @@
 
   
         
-        
+
     </div>  
 
+    <div class="botonImprimir">
+        <input type="submit" value="{{ 'Imprimir' }}" onclick="imprimirBoleta()" id="botonImprimir">
+    </div>
+    
     <script>
         function imprimirBoleta() {
-            // Oculta los botones al imprimir
-
-            document.querySelector('.botones-imprimir').style.display = 'none';
+            document.getElementById('botonImprimir').style.display = 'none';
             window.print();
 
-            // Muestra los botones después de un segundo
             setTimeout(function() {
-                document.querySelector('.botones-imprimir').style.display = 'block';
+                document.getElementById('botonImprimir').style.display = 'block';
             }, 1000);
-        }
-
-        function confirmarCancelacion() {
-            // Redirige a la página de historial
-            window.location.href = "/elecciones";
         }
     </script>
 
@@ -300,3 +288,6 @@
 
 
 </html>
+
+
+
