@@ -311,7 +311,7 @@
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Cerrar Sesión
         </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        <form id="logout-form" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
     @else
@@ -328,7 +328,7 @@
            
             </div>
     <div class="votante-form-container">
-    <form action="{{ route('votantes.importCsv') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ "https://deployrailway-production-3bd5.up.railway.app/votantes/importCsv" }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="csv-upload-section">
         <h2>Cargar Votantes Masivamente desde CSV</h2>
