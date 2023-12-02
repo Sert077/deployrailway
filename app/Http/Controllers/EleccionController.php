@@ -363,7 +363,6 @@ public function cargarBackup(Request $request)
     }
 }
 
-
 public function generarPDF1($id){
 
     $registro = Eleccion::findOrFail($id);
