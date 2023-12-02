@@ -305,7 +305,20 @@
             <li><a href="{{ url('/documentaciones') }}">Documentación</a></li>
             {{-- <li><a href="#">Acerca de</a></li>
             <li><a href="#">Contactos</a></li> --}}
-            <li><a href="#">Ingreso</a></li>
+            <li>
+    @if(auth()->check())
+        {{-- Si el usuario ha iniciado sesión, mostrar el enlace de Cerrar Sesión --}}
+        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            Cerrar Sesión
+        </a>
+        <form id="logout-form" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    @else
+        {{-- Si el usuario no ha iniciado sesión, mostrar el enlace de Ingreso --}}
+        <a href="{{ url('/iniciarsesion') }}">Ingreso</a>
+    @endif
+</li>
             <img src="/images/img.png"  class="company-logo">
         </ul>
         <div class="menu-icon"></div>
@@ -315,7 +328,7 @@
            
             </div>
     <div class="votante-form-container">
-    <form action="{{ url('/votante') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/votante') }}" method="post" enctype="multipart/form-data">
         @csrf
         @if (isset($votante))
                 {{ method_field('PATCH') }}
