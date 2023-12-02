@@ -15,12 +15,24 @@ class VotanteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-        $votantescreados = Votante::orderBy('ideleccion', 'asc')->paginate(500);
-        return view('votante.index', compact('votantescreados'));
-    }
+    public function index(Request $request)
+{
+    // Obtener todos los votantes y ordenar por apellidoPaterno de manera ascendente
+    $votantes = Votante::where('estado', 1)
+        ->when($request->input('eleccion'), function ($query) use ($request) {
+            return $query->where('ideleccion', $request->input('eleccion'));
+        })
+        ->orderBy('apellidoPaterno', 'asc')
+        ->paginate(500);
+
+    // Obtener todas las elecciones para el menú desplegable
+    $elecciones = Eleccion::all();
+
+    // Obtener el ID de la elección seleccionada
+    $eleccionId = $request->input('eleccion');
+
+    return view('votante.index', compact('votantes', 'elecciones', 'eleccionId'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -138,41 +150,7 @@ class VotanteController extends Controller
         return redirect('votante');
     }
 
-    public function import(Request $request)
-{
-    $request->validate([
-        'ideleccion' => 'required',
-        'cargarListaCSV' => 'required|file|mimes:csv,txt',
-    ]);
-
-    $file = $request->file('cargarListaCSV');
-
-    $handle = fopen($file->getPathname(), 'r');
-
-    if ($handle !== false) {
-        while (($row = fgetcsv($handle)) !== false) {
-            // Procesa y almacena cada fila del archivo CSV en la base de datos
-            Votante::create([
-                'ideleccion' => $request->ideleccion,
-                'nombres' => $row[0],
-                'apellidoPaterno' => $row[1],
-                'apellidoMaterno' => $row[2],
-                'codSis' => $row[3],
-                'CI' => $row[4],
-                'tipoVotante' => $row[5],
-                'carrera' => $row[6],
-                'profesion' => $row[7],
-                'cargoAdministrativo' => $row[8],
-                'facultad' => $row[9],
-                'celular' => $row[10],
-                'email' => $row[11],
-            ]);
-        }
-        fclose($handle);
-    }
-
-    return redirect('/elecciones')->with('success', 'Votantes importados exitosamente');
-}
+   
 
 public function showCarga(){
     
@@ -243,5 +221,27 @@ public function showCarga(){
     return redirect('/votante')->with('success', 'Votantes importados exitosamente');
 }
 
+
+public function filter(Request $request)
+{
+    // Validación de datos
+    $request->validate([
+        'eleccion' => 'required|exists:eleccions,id',
+    ]);
+
+    // Obtener el ID de la elección seleccionada
+    $eleccionId = $request->input('eleccion');
+
+    // Obtener los votantes de la elección seleccionada y ordenar por apellidoPaterno
+    $votantes = Votante::where('ideleccion', $eleccionId)
+        ->orderBy('apellidoPaterno', 'asc')
+        ->get();
+
+    // Obtener todas las elecciones para el menú desplegable
+    $elecciones = Eleccion::all();
+
+    return view('votante.index', compact('votantes', 'elecciones'))
+        ->with('eleccionId', $eleccionId);
+}
 
 }
