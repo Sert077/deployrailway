@@ -251,7 +251,7 @@
 
 <body>
     <div class="contenedor">
-        <form action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('logs.filter') }}" method="GET" onsubmit="saveFormValues()">
+        <form action="{{ route('logs.filter') }}" method="GET" onsubmit="saveFormValues()">
             @csrf
             <div class="titulo">
                 <h1>Bitácora del Sistema</h1>
