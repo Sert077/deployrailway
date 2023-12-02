@@ -259,7 +259,7 @@
         <center>
             <h1 style="font-weight:bold">Historial de elecciones</h1>
             <br>
-            <form class= "buscar" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'('/resultados') }}" method="GET">
+            <form class= "buscar" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/resultados') }}" method="GET">
                 <input type="text" name="query" id="query" required value="{{ $query }}">
                 <button type="submit">Buscar</button>
                 <input type="button" value="Borrar" onclick="confirmarCancelacion()" class= "borrar"></button>
