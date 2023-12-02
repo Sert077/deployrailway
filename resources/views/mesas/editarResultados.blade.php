@@ -401,7 +401,7 @@ input[type="reset"]:hover {
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Cerrar Sesión
         </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        <form id="logout-form" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
     @else
@@ -422,7 +422,7 @@ input[type="reset"]:hover {
     <br>
    
     <div class="container">
-    <form action="{{ url('/mesas/' . $resultados->id . '/guardarResultados') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/mesas/' . $resultados->id . '/guardarResultados') }}" method="post" enctype="multipart/form-data">
             @csrf
             {{ method_field('PATCH') }}
 
@@ -473,7 +473,7 @@ input[type="reset"]:hover {
               <label for="acta">Acta de cierre (PDF 2MB max.):</label>
                 @if ($resultados->acta)
               <span>{{ $resultados->acta }}</span>
-                 <embed src="{{ asset('storage/' . $resultados->acta) }}" type="application/pdf"><br><br>
+                 <embed src="{{ asset('https://deployrailway-production-3bd5.up.railway.app/storage/' . $resultados->acta) }}" type="application/pdf"><br><br>
                 @endif
 
                 <input type="file" accept=".pdf" title="Subir archivo PDF (máximo 2 MB)" name="acta" size="2000000" required> 
