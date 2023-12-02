@@ -313,7 +313,7 @@
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Cerrar Sesión
         </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        <form id="logout-form" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
     @else
@@ -330,7 +330,7 @@
            
             </div>
     <div class="votante-form-container">
-    <form action="{{ url('/frente') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/frente') }}" method="post" enctype="multipart/form-data">
         @csrf
         @if (isset($frente))
                 {{ method_field('PATCH') }}
@@ -370,7 +370,7 @@
                 <label for="fotofrente">Logo del Frente:</label>
                     @if (isset($frente) && $frente->fotofrente)
                         <p>{{ $frente->fotofrente }}</p>
-                        <img src="{{ asset('storage/' . $frente->fotofrente) }}" alt="" width="27%" height="27%">
+                        <img src="{{ asset('https://deployrailway-production-3bd5.up.railway.app/storage/' . $frente->fotofrente) }}" alt="" width="27%" height="27%">
                     @endif
                     <input type="file" title="Subir Logotipo o foto del frente" name="fotofrente" required
                     accept=".png, .jpg, .jpeg"   
