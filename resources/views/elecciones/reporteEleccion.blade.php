@@ -130,7 +130,7 @@
     <div class="contenedor">
         <div class="botones-imprimir">
             <input type="submit" value="{{ 'Imprimir' }}" onclick="imprimirBoleta()" id="botonImprimir">
-            <input type="button" value="Volver a elecciones" onclick="confirmarCancelacion()" class= "cancelar">
+            
         </div>
         <br>
         <h2>Reporte de la elección</h2>
@@ -258,11 +258,6 @@
             setTimeout(function() {
                 document.querySelector('.botones-imprimir').style.display = 'block';
             }, 1000);
-        }
-
-        function confirmarCancelacion() {
-            // Redirige a la página de historial
-            window.location.href = "/elecciones";
         }
     </script>
 
