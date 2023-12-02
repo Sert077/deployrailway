@@ -414,7 +414,7 @@
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Cerrar Sesión
         </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        <form id="logout-form" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
     @else
