@@ -152,7 +152,7 @@ Route::get('/iniciarsesion', function () {
   return view('auth.iniciarSe');
 });
 
-
+Route::get('/generar-pdf1/{id}','EleccionController@generarPDF1')->name('elecciones1.pdf');
 Route::get('/historial', [EleccionController::class, 'historial'])->name('buscar');
 Route::get('/resultados', [EleccionController::class, 'buscar'])->name('resultados');
 
