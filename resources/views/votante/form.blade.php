@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RegistrarVotante</title>
+    <title>Registrar Votante</title>
     <style>
         * {
             margin: 0;
@@ -315,7 +315,7 @@
            
             </div>
     <div class="votante-form-container">
-    <form action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/votante') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url('/votante') }}" method="post" enctype="multipart/form-data">
         @csrf
         @if (isset($votante))
                 {{ method_field('PATCH') }}
@@ -338,7 +338,7 @@
 @enderror
 
                 <label for="nombres">Nombre:</label>
-                <input type="text" placeholder="Escribe el nombre aqui..." maxlength="40" oninput="this.value = this.value.replace(/[^A-Za-z,. ]+/g, '')"
+                <input type="text" placeholder="Escribe el Nombre aqui..." maxlength="40" oninput="this.value = this.value.replace(/[^A-Za-z,. ]+/g, '')"
                 name="nombres" value="{{ isset($votante) ? $votante->nombres : '' }}" required><br><br>
 
                 <label for="apellidoPaterno">Apellido Paterno:</label>
@@ -351,8 +351,8 @@
                 oninput="this.value = this.value.replace(/[^A-Za-z,.]+/g, '')"
                 name="apellidoMaterno" value="{{ isset($votante) ? $votante->apellidoMaterno : '' }}" id="apellidoMaterno" required><br><br>
 
-                <label for="codSis">Codigo Sis:</label>
-                <input type="text" placeholder="Escribe el Codigo Sis aquí..." maxlength="9"
+                <label for="codSis">Código SIS:</label>
+                <input type="text" placeholder="Escribe el Codigo SIS aquí..." maxlength="9"
                 oninput="this.value = this.value.replace(/[^0-9]+/g, '')"
                 name="codSis" value="{{ isset($votante) ? $votante->codSis : old('codSis') }}" id="codSis" required>
                 @error('codSis')
@@ -406,20 +406,19 @@
                 <input type="number" placeholder="Escribe el Número de Celular aquí..." min="60000000" max=""79999999 
                 name="celular" value="{{ isset($votante) ? $votante->celular : '' }}" id="celular" required><br><br>
 
-                <label for="email">e-mail:</label>
-                <input type="email" placeholder="Escribe el e-Mail aquí..." maxlength="40" 
+                <label for="email">E-Mail:</label>
+                <input type="email" placeholder="Escribe el E-Mail aquí..." maxlength="40" 
                 name="email" value="{{ isset($votante) ? $votante->email : '' }}" id="email" required><br><br>
 
 
                 
         </div>
-        <input type="submit" value="Registrar"
+        <input type="submit" value="{{ isset($votante) ? 'Actualizar' : 'Registrar' }}"
                 onclick="confirmacion()">
           
         <input type="reset" value="Cancelar" onclick="cancelacion()">
         <label for=""></label><br><br>
         <label for=""></label><br><br>
-        
     </form>
 
     
@@ -429,7 +428,7 @@
     <div class="footer">
 
         <div class="footer-izq">
-            Av. Oquendo y calle Jordán asd
+            Av. Oquendo y calle Jordán 
             <br>
             Mail: Tribunal_electoral@umss.edu
             <br>
@@ -444,22 +443,16 @@
 
         </div>
         <div class="footer-der">
-            <a href="{{ url('/') }}">Acerca de</a>
-            <span>&nbsp;|&nbsp;</span> <!-- Para agregar un separador -->
-            <a href="{{ url('/') }}">Contactos</a>
+            <a href="{{ url('/acercade') }}">Acerca de | Contactos</a>
+            <!--<span>&nbsp;|&nbsp;</span> 
+            <a href="#">Contactos</a>-->
 
         </div>
 
     </div>
     
     <script>
-        function cancelacion() {
-            var confirmacion = confirm("¿Seguro que deseas cancelar? Los cambios no se guardarán.");
-            if (confirmacion) {
-
-                window.location.href = "/elecciones";
-            }
-        }
+ 
 
         function confirmacion() {
             var confirmacion = confirm("Estas seguro de registrar este votante?");
@@ -502,4 +495,14 @@
         mostrarCampoAdicional();
     </script>
 </body>
+<script>
+   
+    function cancelacion() {
+    var confirmacion = confirm("¿Seguro que deseas cancelar?");
+        if (confirmacion) {
+    
+            window.location.href = "/votante";
+        }
+    }
+</script> 
 </html> 

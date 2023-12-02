@@ -9,11 +9,12 @@
     <br>
     <br>
     <br>
-    <title>Miembros del Comite</title>
+    <title>Lista de Votantes</title>
     
     
 
 </head>
+ 
 <style>
 * {
     margin: 0;
@@ -474,8 +475,18 @@ td:first-child {
     }
 }
 
+.search-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px; /* Ajusta según sea necesario */
+    }
+
+    .search-container form {
+        text-align: center;
+    }
+
 </style>
- 
 
 <body>
     <nav>
@@ -500,7 +511,20 @@ td:first-child {
             <li><a href="{{ url('/documentaciones') }}">Documentación</a></li>
             {{-- <li><a href="#">Acerca de</a></li>
             <li><a href="#">Contacto</a></li> --}}
-            <li><a href="#">Ingreso</a></li>
+            <li>
+    @if(auth()->check())
+        {{-- Si el usuario ha iniciado sesión, mostrar el enlace de Cerrar Sesión --}}
+        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            Cerrar Sesión
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    @else
+        {{-- Si el usuario no ha iniciado sesión, mostrar el enlace de Ingreso --}}
+        <a href="{{ url('/iniciarsesion') }}">Ingreso</a>
+    @endif
+</li>
             <img src="/images/img.png"  class="company-logo">
         </ul>
         <div class="menu-icon"></div>
@@ -521,7 +545,7 @@ td:first-child {
 
         <div class="container botonesss">
 
-
+        @if(auth()->user()->name == 'admin')
             <div class="botones">
             
 
@@ -530,10 +554,38 @@ td:first-child {
                 <a href="{{ url('/votantes/carga') }}" class="buttons">Añadir Votantes por CSV</a>
 
             </div>
-
+        @endif
 
         </div>
 
+        <div class="search-container">
+            <form action="{{ url('/votantes/filter') }}" method="GET">
+                @csrf
+                <label for="eleccion">Elección:</label>
+                <select name="eleccion" id="eleccion">
+                    <option value="" selected>Seleccione una elección</option>
+                    @foreach($elecciones as $eleccion)
+                        <option value="{{ $eleccion->id }}">{{ $eleccion->nombre }}</option>
+                    @endforeach
+                </select>
+                <button type="submit" class="buscar"
+                    style="background-color: #003770; color: #fff; padding: 10px 20px; border: none; border-radius: 3px; cursor: pointer;">Ver Votantes</button>
+            </form>
+            
+        </div>
+        <div class="search-container">
+    <label for="search">Buscar en la lista:</label>
+    <input type="text" id="search" name="search" placeholder="Escribe una palabra..." style="margin-right: 10px;">
+    <button type="button" class="buscar"
+        style="background-color: #003770; color: #fff; padding: 10px 20px; margin-right: 10px; border: none; border-radius: 3px; cursor: pointer;"
+        onclick="searchTable()">Buscar</button>
+    <button type="button" class="borrar"
+        style="background-color: #E30613; color: #fff; padding: 10px 20px; border: none; border-radius: 3px; cursor: pointer;"
+        onclick="clearSearch()">Borrar</button>
+</div>
+
+
+               
         <br>
         <div class="container">
             <div class="row">
@@ -542,22 +594,26 @@ td:first-child {
                         <thead>
                             <tr>
                                 <th>IdEleccion</th>
-                                <th>Nombre Votante</th>
                                 <th>Apellido Paterno</th>
                                 <th>Apellido Materno</th>
+                                <th>Nombre Votante</th>
+                                <th>Carnet de Identidad</th>
                                 <th>Tipo de Votante</th>
+                                @if(auth()->user()->name == 'admin')
                                 <th>Acciones</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($votantescreados as $votante)
+                            @foreach ($votantes as $votante)
                                 <tr>
                                     <td>{{ $votante->ideleccion }}</td>
-                                    <td>{{ $votante->nombres }}</td>
                                     <td>{{ $votante->apellidoPaterno }}</td>
                                     <td>{{ $votante->apellidoMaterno }}</td>
+                                    <td>{{ $votante->nombres }}</td>
+                                    <td>{{ $votante->CI }}</td>
                                     <td>{{ $votante->tipoVotante }}</td>
-
+                                    @if(auth()->user()->name == 'admin')
                                     <td class="celda-botones">
 
 
@@ -575,7 +631,7 @@ td:first-child {
                                                
                                  
                                  {{-- Inicio Función borrar --}}
-                                    <form id="delete-form-{{ $votante->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/votante/' . $votante->id) }}" method="post" style="display: inline;">
+                                    <form id="delete-form-{{ $votante->id }}" action="{{ url('/votante/' . $votante->id) }}" method="post" style="display: inline;">
                                     @csrf
                                  {{ method_field('DELETE') }}
                                      <button class="buttons-dentro-tabla" title="Borrar Votante" onclick="return confirm ('Quieres borrar este votante?')">
@@ -586,7 +642,7 @@ td:first-child {
   
                                     
                                     </td>
-
+                                        @endif
 
                                     
                                     
@@ -600,10 +656,57 @@ td:first-child {
                                 </tr>
                             @endforeach
                         </tbody>
+
+
+
                     </table>
+
+
                 </div>
             </div>
         </div>
+
+        
+
+<script>
+    function searchTable() {
+        // Obtiene el valor de búsqueda desde el input
+        var searchTerm = document.getElementById("search").value.toLowerCase();
+        
+        // Obtiene todas las filas de la tabla
+        var rows = document.getElementById("eleccionesTable").getElementsByTagName("tr");
+        
+        // Itera sobre las filas y oculta aquellas que no coincidan con la búsqueda
+        for (var i = 1; i < rows.length; i++) { // Comienza desde 1 para omitir la fila de encabezado
+            var cells = rows[i].getElementsByTagName("td");
+            var found = false;
+            
+            // Itera sobre las celdas de Apellido Paterno, Apellido Materno y Carnet de Identidad
+            for (var j = 1; j <= 3; j++) {
+                var cellText = cells[j].textContent.toLowerCase();
+                
+                // Verifica si la celda contiene el término de búsqueda
+                if (cellText.includes(searchTerm)) {
+                    found = true;
+                    break;
+                }
+            }
+            
+            // Muestra u oculta la fila según si se encontró la coincidencia
+            rows[i].style.display = found ? "" : "none";
+        }
+    }
+
+    function clearSearch() {
+        // Limpia el valor de búsqueda y vuelve a mostrar todas las filas
+        document.getElementById("search").value = "";
+        searchTable();
+    }
+</script>
+
+
+
+
         <br> <br>
         <br> <br>
         <br> <br>
@@ -612,7 +715,7 @@ td:first-child {
                                     
 
                                         <div class="footer-izq">
-                                            Av. Oquendo y calle Jordán asd
+                                            Av. Oquendo y calle Jordán 
                                             <br>
                                             Mail: Tribunal_electoral@umss.edu
                                             <br>
@@ -628,9 +731,9 @@ td:first-child {
 
                                         </div>
                                         <div class="footer-der">
-                                            <a href="{{ url('/') }}">Acerca de</a>
-                                            <span>&nbsp;|&nbsp;</span> <!-- Para agregar un separador -->
-                                            <a href="{{ url('/') }}">Contactos</a>
+                                        <a href="{{ url('/acercade') }}">Acerca de | Contactos</a>
+                                        <!--<span>&nbsp;|&nbsp;</span> 
+                                        <a href="#">Contactos</a>-->
 
                                         </div>
 
