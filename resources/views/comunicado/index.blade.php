@@ -14,7 +14,8 @@
     
 
     </head>
-<style>
+
+    <style>
 
 * {
     margin: 0;
@@ -476,7 +477,7 @@ td:first-child {
 }
 
 </style>
-    
+
 <body>
     <nav>
         <div class="logo">
@@ -496,7 +497,20 @@ td:first-child {
             <li><a href="{{ url('/elecciones') }}">Elecciones</a></li>
             <li><a href="{{ url('/comunicados') }}">Comunicados</a></li>
             <li><a href="{{ url('/documentaciones') }}">Documentación</a></li>
-            <li><a href="#">Ingreso</a></li>
+            <li>
+    @if(auth()->check())
+        {{-- Si el usuario ha iniciado sesión, mostrar el enlace de Cerrar Sesión --}}
+        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            Cerrar Sesión
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    @else
+        {{-- Si el usuario no ha iniciado sesión, mostrar el enlace de Ingreso --}}
+        <a href="{{ url('/iniciarsesion') }}">Ingreso</a>
+    @endif
+</li>
             <img src="/images/img.png"  class="company-logo">
         </ul>
         <div class="menu-icon"></div>
@@ -512,14 +526,14 @@ td:first-child {
         </center>
         <br>
         <br>
-
+        @if(auth()->user()->name == 'admin')
         <div class="container botonesss">
             <div class="botones">
                 <a href="{{ url('comunicados/create') }}" class="buttons">Añadir</a>
 
             </div>
         </div>
-
+        @endif
         <div class="container">
             <div class="row">
                 <div class="table-responsive">
@@ -530,7 +544,9 @@ td:first-child {
                                 <th>Título</th>
                                 <th>Añadido el:</th>
                                 <th>Finaliza el:</th>
+                                @if(auth()->user()->name == 'admin')
                                 <th>Acciones</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -538,6 +554,7 @@ td:first-child {
                                 <tr>
                                     <td>{{ $comunicado->id}}</td>
                                     <td>{{ $comunicado->titulo}}
+
                                     <td>
                                         @if ($comunicado->inicio)
                                             {{ \Carbon\Carbon::parse($comunicado->inicio)->format('d/m/y') }}
@@ -552,13 +569,13 @@ td:first-child {
                                             Sin fecha de fin
                                         @endif
                                     </td>
-
+                                    @if(auth()->user()->name == 'admin')
                                     <td class="celda-botones">
                                     <button class="buttons-dentro-tabla" title="Editar Comite" onclick="window.location.href='{{ url('/comunicados/' . $comunicado->id . '/edit') }}'">
                                         <img src="/images/editar.png" alt="Editar" class="formato-imagen" />
                                     </button>
 
-                                    <form id="delete-form-{{ $comunicado->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/comunicados/' . $comunicado->id) }}" method="post" style="display: inline;">
+                                    <form id="delete-form-{{ $comunicado->id }}" action="{{ url('/comunicados/' . $comunicado->id) }}" method="post" style="display: inline;">
                                         @csrf
                                         {{ method_field('DELETE') }}
                                         <button class="buttons-dentro-tabla" title="Borrar Elección" onclick="return confirm ('¿Seguro que quieres borrar este comunicado?')">
@@ -566,8 +583,10 @@ td:first-child {
                                         </button>
                                     </form>
                                 </tr>
+                                @endif
                             @endforeach
                         </tbody>
+                        
                     </table> 
                     <!--{{ $comunicados->links() }}-->
                 </div>
@@ -578,7 +597,7 @@ td:first-child {
         <div class="footer">
 
             <div class="footer-izq">
-                Av. Oquendo y calle Jordán asd
+                Av. Oquendo y calle Jordán 
                 <br>
                 Mail: Tribunal_electoral@umss.edu
                 <br>
@@ -593,9 +612,9 @@ td:first-child {
 
             </div>
             <div class="footer-der">
-                <a href="{{ url('/') }}">Acerca de</a>
-                <span>&nbsp;|&nbsp;</span>
-                <a href="{{ url('/') }}">Contactos</a>
+            <a href="{{ url('/acercade') }}">Acerca de | Contactos</a>
+            <!--<span>&nbsp;|&nbsp;</span> 
+            <a href="#">Contactos</a>-->
 
             </div>
         </div>

@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Crear/Editar comunicado</title>
+        <title>Crear/Editar Comunicado</title>
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
     </head>
     <style>
@@ -98,7 +98,7 @@
     </style>
     <body>
         <div class="container">
-            <form action="{{ isset($comunicado) ? 'https://deployrailway-production-3bd5.up.railway.app'.('/comunicados/' . $comunicado->id) : 'https://deployrailway-production-3bd5.up.railway.app'.('/comunicados') }}"
+            <form action="{{ isset($comunicado) ? url('/comunicados/' . $comunicado->id) : url('/comunicados') }}"
                 method="post" enctype="multipart/form-data">
                 @csrf
                 @if (isset($comunicado))
@@ -112,7 +112,7 @@
                     <label for="titulo">Título:</label>
                     @error('titulo')<span style="color:red">{{ $message }}</span> @enderror
                     <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z,. 0-9]+/g, '')" maxlength="40"
-                    name="titulo" placeholder="Escribe el título del comunicado..." value="{{ isset($comunicado) ? $comunicado->titulo : '' }}" id="titulo" maxlength="180" required
+                    name="titulo" placeholder="Escribe el Título del Comunicado..." value="{{ isset($comunicado) ? $comunicado->titulo : '' }}" id="titulo" maxlength="180" required
                     >
                     
                     <div class="file-upload-container">
@@ -134,7 +134,7 @@
                     <label for="fin">Fecha Fín:</label>
                     <input type="date" id="fin" name="fin"
                     value="{{ isset($comunicado) ? $comunicado->fin : '' }}"
-                    min="{{ now()->addDay(1)->format('Y-m-d') }}">
+                    min="{{ now()->addDay(1)->format('Y-m-d') }}" required>
 
                     <input type="submit" value="{{ isset($comunicado) ? 'Actualizar' : 'Registrar' }}" onclick="return confirm ('¿Está seguro que registrar este comunicado?')">
                     <input type="reset" value="Cancelar" onclick="cancelacion()">
