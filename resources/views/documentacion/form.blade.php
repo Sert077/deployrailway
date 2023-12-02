@@ -137,7 +137,7 @@
                         <label for="pdf">Archivo(PDF):</label>
                         @if (isset($documentacion) && $documentacion->pdf)
                             <p>{{ $documentacion->pdf}}</p>
-                            <embed src="{{ asset('storage/' . $documentacion->pdf) }}" type="">
+                            <embed src="{{ asset('https://deployrailway-production-3bd5.up.railway.app/storage/' . $documentacion->pdf) }}" type="">
                         @endif
                         <input type="file" accept="application/pdf" title="Subir archivo PDF" name="pdf"
                             {{ isset($documentacion) && $documentacion->pdf ? '' : 'required' }} 
