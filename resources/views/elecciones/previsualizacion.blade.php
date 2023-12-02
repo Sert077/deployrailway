@@ -451,7 +451,7 @@
         <a href="{{ route('elecciones.editarResultados', ['id' => $eleccion->id]) }}" class="boton-descarga-pdf">
           Editar resultados</a>
 
-        <a href="{{ route('elecciones.pdf', ['id' => $eleccion->id]) }}" class="reporte">
+        <a href="{{ route('elecciones.pdf', ['id' => $eleccion->id]) }}" class="boton-descarga-pdf">
                                                     Reporte
                                                 </a>
         </div>
