@@ -9,7 +9,7 @@
     <br>
     <br>
     <br>
-    <title>Miembros del Comite</title>
+    <title>Lista de Miembros del Comite</title>
    
 
 </head>
@@ -501,7 +501,20 @@ td:first-child {
             <li><a href="{{ url('/documentaciones') }}">Documentación</a></li>
             {{-- <li><a href="#">Acerca de</a></li>
             <li><a href="#">Contacto</a></li> --}}
-            <li><a href="#">Ingreso</a></li>
+            <li>
+    @if(auth()->check())
+        {{-- Si el usuario ha iniciado sesión, mostrar el enlace de Cerrar Sesión --}}
+        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            Cerrar Sesión
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    @else
+        {{-- Si el usuario no ha iniciado sesión, mostrar el enlace de Ingreso --}}
+        <a href="{{ url('/iniciarsesion') }}">Ingreso</a>
+    @endif
+</li>
             <img src="/images/img.png"  class="company-logo">
         </ul>
         <div class="menu-icon"></div>
@@ -514,22 +527,22 @@ td:first-child {
         <br>
         <br>
         <center>
-            <h1>Miembros del Comite</h1>
+            <h1>Lista de Miembros del Comite</h1>
         </center>
         <br>
         <br>
-
+        @if(auth()->user()->name == 'admin')
         <div class="container botonesss">
 
 
             <div class="botones">
-                <a href="{{ url('comite/create') }}" class="buttons">Añadir miembro de comite</a>
+                <a href="{{ url('comite/create') }}" class="buttons">Añadir Miembro de Comite</a>
 
             </div>
 
 
         </div>
-
+                @endif
         <br>
         <div class="container">
             <div class="row">
@@ -542,7 +555,9 @@ td:first-child {
                                 <th>Apellido Paterno</th>
                                 <th>Apellido Materno</th>
                                 <th>Cargo en Comite</th>
+                                @if(auth()->user()->name == 'admin')
                                 <th>Acciones</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -553,7 +568,7 @@ td:first-child {
                                     <td>{{ $comite->apellidoPaterno }}</td>
                                     <td>{{ $comite->apellidoMaterno }}</td>
                                     <td>{{ $comite->cargoComite }}</td>
-
+                                    @if(auth()->user()->name == 'admin')
                                     <td class="celda-botones">
                                     {{-- <button class="buttons" style="background-color: 04243C; color: #FFF; padding: 5px 10px; border: none; cursor: pointer;" 
                                     onclick="window.location.href='{{ url('/comite/' . $comite->id . '/edit') }}'">Editar</button> --}}
@@ -565,7 +580,7 @@ td:first-child {
 
                                   
                                 {{-- Inicio Función borrar --}}
-                                      <form id="delete-form-{{ $comite->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/comite/' . $comite->id) }}" method="post" style="display: inline;">
+                                      <form id="delete-form-{{ $comite->id }}" action="{{ url('/comite/' . $comite->id) }}" method="post" style="display: inline;">
                                      @csrf
                                 {{ method_field('DELETE') }}
                                       <button class="buttons-dentro-tabla" title="Borrar Elección" onclick="return confirm ('Quieres borrar este miembro del comite?')">
@@ -590,7 +605,7 @@ td:first-child {
 
 
                                     </td>
-                                
+                                @endif
 
                                 
                                 
@@ -618,7 +633,7 @@ td:first-child {
             <br>
 
             <div class="footer-izq">
-                Av. Oquendo y calle Jordán asd
+                Av. Oquendo y calle Jordán 
                 <br>
                 Mail: Tribunal_electoral@umss.edu
                 <br>
@@ -633,9 +648,9 @@ td:first-child {
 
             </div>
             <div class="footer-der">
-                <a href="{{ url('/') }}">Acerca de</a>
-                <span>&nbsp;|&nbsp;</span> <!-- Para agregar un separador -->
-                <a href="{{ url('/') }}">Contactos</a>
+            <a href="{{ url('/acercade') }}">Acerca de | Contactos</a>
+            <!--<span>&nbsp;|&nbsp;</span> 
+            <a href="#">Contactos</a>-->
 
             </div>
 
