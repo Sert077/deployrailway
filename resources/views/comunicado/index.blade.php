@@ -503,7 +503,7 @@ td:first-child {
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Cerrar Sesión
         </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        <form id="logout-form" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
     @else
@@ -575,7 +575,7 @@ td:first-child {
                                         <img src="/images/editar.png" alt="Editar" class="formato-imagen" />
                                     </button>
 
-                                    <form id="delete-form-{{ $comunicado->id }}" action="{{ url('/comunicados/' . $comunicado->id) }}" method="post" style="display: inline;">
+                                    <form id="delete-form-{{ $comunicado->id }}" action="{{ 'https://deployrailway-production-3bd5.up.railway.app'.('/comunicados/' . $comunicado->id) }}" method="post" style="display: inline;">
                                         @csrf
                                         {{ method_field('DELETE') }}
                                         <button class="buttons-dentro-tabla" title="Borrar Elección" onclick="return confirm ('¿Seguro que quieres borrar este comunicado?')">
