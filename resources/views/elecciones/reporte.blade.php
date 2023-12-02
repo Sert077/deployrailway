@@ -199,7 +199,7 @@
 </head>
 <body>
     <div class="contenedor">
-        <form action='https://deployrailway-production-3bd5.up.railway.app'."/reporte" method="GET">
+        <form action="/reporte" method="GET">
             @csrf
             
                 <div class="titulo">
@@ -259,7 +259,7 @@
                                     <td>{{ isset($nroVotantesPorRegistro[$registro->id]) ? $nroVotantesPorRegistro[$registro->id] : 0 }}</td>
                                     <td>{{ isset($frentesG[$registro->id]) ? $frentesG[$registro->id]->nombrefrente : 'Sin dato' }}</td>
                                     <td>
-                                        <form action='https://deployrailway-production-3bd5.up.railway.app'."/reporteGrafico/{{ $registro->id }}" method="get">
+                                        <form action="/reporteGrafico/{{ $registro->id }}" method="get">
                                             <button type="submit" class= "grafico">Gráfico</button>
                                         </form>
                                     </td>
