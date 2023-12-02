@@ -408,7 +408,20 @@
             <li><a href="{{ url('/elecciones') }}">Elecciones</a></li>
             <li><a href="{{ url('/comunicados') }}">Comunicados</a></li>
             <li><a href="{{ url('/documentaciones') }}">Documentación</a></li>
-            <li><a href="#">Ingreso</a></li>
+            <li>
+    @if(auth()->check())
+        {{-- Si el usuario ha iniciado sesión, mostrar el enlace de Cerrar Sesión --}}
+        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            Cerrar Sesión
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    @else
+        {{-- Si el usuario no ha iniciado sesión, mostrar el enlace de Ingreso --}}
+        <a href="{{ url('/iniciarsesion') }}">Ingreso</a>
+    @endif
+</li>
             <img src="/images/img.png" class="company-logo">
         </ul>
         <div class="menu-icon"></div>
@@ -438,9 +451,8 @@
         <a href="{{ route('elecciones.editarResultados', ['id' => $eleccion->id]) }}" class="boton-descarga-pdf">
           Editar resultados</a>
 
-          <a href="{{ route('elecciones.pdf', ['id' => $eleccion->id]) }}" class="boton-descarga-pdf">
+        <a href="{{ route('elecciones1.pdf', ['id' => $eleccion->id]) }}" class="boton-descarga-pdf">
         Generar reporte</a>
-
         </div>
     </div>
 
@@ -480,12 +492,12 @@
                  @if (isset($eleccion) && $eleccion->convocatoria)
                   <div style="display: flex; align-items: center;">
                   <p style="margin-bottom: 0; margin-right: 10px;">Nombre del archivo: {{ $eleccion->convocatoria }}</p>
-                    <a href="{{ asset('https://deployrailway-production-3bd5.up.railway.app/storage/' . $eleccion->convocatoria) }}" download="Convocatoria.pdf"> 
+                    <a href="{{ asset('storage/' . $eleccion->convocatoria) }}" download="Convocatoria.pdf"> 
                   <img src="{{ asset('/images/descargar.png') }}" alt="Botón Descargar PDF" class="boton_descargar" title="Descargar Convocatoria" style="cursor: pointer;">
                    </a>
                   </div>
                  @endif
-                 <embed src="{{ asset('https://deployrailway-production-3bd5.up.railway.app/storage/' . $eleccion->convocatoria) }}" type="">
+                 <embed src="{{ asset('storage/' . $eleccion->convocatoria) }}" type="">
                  <br><br>
                         
                     <h2 class="forms" style="color: rgba(4, 36, 60, 0.99); font-size: 20px;  font-weight: 400; word-wrap: break-word;" >Tipo de Eleccion:</h2>
@@ -509,9 +521,9 @@
                 Copyright © 2023 Tribunal Electoral Universitario Todos los derechos Reservados
             </div>
             <div class="footer-der">
-                <a href="{{ url('/') }}">Acerca de</a>
-                <span>&nbsp;|&nbsp;</span>
-                <a href="{{ url('/') }}">Contactos</a>
+            <a href="{{ url('/acercade') }}">Acerca de | Contactos</a>
+            <!--<span>&nbsp;|&nbsp;</span> 
+            <a href="#">Contactos</a>-->
             </div>
         </div>
     </div>
